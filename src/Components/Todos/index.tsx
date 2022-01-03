@@ -1,32 +1,41 @@
-import { useObservable } from "@ngneat/react-rxjs";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import Todo from "../../interfaces/todos";
+import {
+  addReduxTodo,
+  deleteReduxTodo,
+  updateReduxTodo,
+} from "../../reduxStore/todos";
 import {
   addTodo,
   deleteTodo,
   updateTodoCompleted,
-  visibleTodos$,
 } from "../../store/todos.repository";
 import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
 import TodosFilter from "./TodosFilter";
 
-const Todos = () => {
-  const [todos] = useObservable(visibleTodos$);
+interface Props {
+  todos: Todo[];
+  type: "ELF" | "REDUX";
+}
 
-  useEffect(() => {
-    addTodo("Welcome");
-    addTodo("To");
-    addTodo("Elf");
-  }, []);
+const Todos = (props: Props) => {
+  const { todos, type } = props;
+
+  const dispatch = useDispatch();
 
   return (
     <Wrapper>
-      <Heading>TODOS</Heading>
+      <Heading>{type}</Heading>
       <Card>
         <Header>
-          <TodosFilter></TodosFilter>
-          <AddTodo onAdd={addTodo}></AddTodo>
+          {type === "ELF" && <TodosFilter></TodosFilter>}
+          <AddTodo
+            onAdd={(text: Todo["text"]) =>
+              type === "ELF" ? addTodo(text) : dispatch(addReduxTodo(text))
+            }
+          ></AddTodo>
         </Header>
 
         <section>
@@ -35,8 +44,16 @@ const Todos = () => {
               <TodoItem
                 todo={todo}
                 key={todo.id}
-                onClick={updateTodoCompleted}
-                onDelete={deleteTodo}
+                onClick={() =>
+                  type === "ELF"
+                    ? updateTodoCompleted(todo.id)
+                    : dispatch(updateReduxTodo(todo.id))
+                }
+                onDelete={() =>
+                  type === "ELF"
+                    ? deleteTodo(todo.id)
+                    : dispatch(deleteReduxTodo(todo.id))
+                }
               ></TodoItem>
             );
           })}

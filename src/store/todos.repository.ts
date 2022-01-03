@@ -9,10 +9,10 @@ import {
   withEntities,
 } from "@ngneat/elf-entities";
 import { switchMap } from "rxjs";
-import Todo from "../interfaces/todos";
+import Todo, { intialState } from "../interfaces/todos";
 
 const { state, config } = createState(
-  withEntities<Todo>(),
+  withEntities<Todo>({ initialValue: intialState }),
   withProps<TodosProps>({ filter: "ALL" })
 );
 
@@ -28,7 +28,10 @@ export const setTodos = (todos: Todo[]) => {
 
 export const addTodo = (text: Todo["text"]) => {
   store.update(
-    addEntities({ completed: false, text, id: Math.random() * 100 })
+    addEntities(
+      { completed: false, text, id: Math.random() * 100 },
+      { prepend: true }
+    )
   );
 };
 

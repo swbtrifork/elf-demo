@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 import Todo from "../../../interfaces/todos";
 
 interface Props {
@@ -10,17 +10,29 @@ interface Props {
 
 const TodoItem = (props: Props) => {
   const { onClick, onDelete, todo } = props;
+  const [animate, setAnimate] = useState(false);
 
   const handleOnClick = () => {
     onClick(todo.id);
   };
 
+  const handleOnDelete = () => {
+    setAnimate(true);
+    setTimeout(() => {
+      onDelete(todo.id);
+    }, 400);
+  };
+
   return (
-    <Wrapper onClick={handleOnClick} backgroundColor={props.todo.completed}>
+    <Wrapper
+      animate={animate}
+      onClick={handleOnClick}
+      backgroundColor={props.todo.completed}
+    >
       <InnerWrapper>
         <span>{todo.text}</span>
 
-        <Button onClick={() => onDelete(todo.id)}>Delete</Button>
+        <Button onClick={handleOnDelete}>Delete</Button>
       </InnerWrapper>
     </Wrapper>
   );
@@ -28,7 +40,16 @@ const TodoItem = (props: Props) => {
 
 export default React.memo(TodoItem);
 
-const Wrapper = styled.div<{ backgroundColor: boolean }>`
+const fadeOut = keyframes`
+from{
+  opacity: 1;
+}
+to{
+  opacity: 0;
+}
+`;
+
+const Wrapper = styled.div<{ backgroundColor: boolean; animate: boolean }>`
   --radius: 12px;
   --padding: 6px;
 
@@ -42,6 +63,13 @@ const Wrapper = styled.div<{ backgroundColor: boolean }>`
   overflow: hidden;
 
   transition: 300ms background-color;
+  animation: ${(props) =>
+    props.animate
+      ? css`
+          ${fadeOut} 200ms
+        `
+      : undefined};
+  animation-fill-mode: both;
 `;
 
 const InnerWrapper = styled.div`

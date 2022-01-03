@@ -9,17 +9,18 @@ import {
 const TodosFilter = () => {
   const options: TodosProps["filter"][] = ["ALL", "ACTIVE", "COMPLETED"];
 
-  const filter = useObservable(filter$);
+  const [filter] = useObservable(filter$);
 
   return (
     <Wrapper>
       {options.map((text) => {
         return (
           <Anchor
+            key={text}
             onClick={() => {
               updateTodosFilter(text);
             }}
-            chosen={filter[0] === text}
+            chosen={filter === text}
           >
             {text}
             <Revealed>{text}</Revealed>
