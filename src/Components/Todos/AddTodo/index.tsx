@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Todo from "../../../interfaces/todos";
 
 interface Props {
@@ -25,9 +25,11 @@ const AddTodo = (props: Props) => {
   return (
     <Wrapper onSubmit={onSubmit}>
       <Input value={text} onChange={onChange} />
-      <Button type="submit">
-        <ButtonFront>Add Todo</ButtonFront>
-      </Button>
+      <ButtonWrapper>
+        <Button type="submit">
+          <ButtonFront>Add Todo</ButtonFront>
+        </Button>
+      </ButtonWrapper>
     </Wrapper>
   );
 };
@@ -39,10 +41,27 @@ const Wrapper = styled.form`
   align-items: baseline;
   justify-content: space-between;
   margin: 0px -24px;
+  gap: 48px;
 `;
 
 const Input = styled.input`
   resize: none;
+  flex: 1;
+`;
+
+const slideIn = keyframes`
+from {
+  transform: translateX(calc(100% + 24px));
+}
+to{
+  transform: translateX(0%);
+}
+`;
+
+const ButtonWrapper = styled.div`
+  animation: ${slideIn} 1000ms;
+  animation-delay: 300ms;
+  animation-fill-mode: both;
 `;
 
 const Button = styled.button`

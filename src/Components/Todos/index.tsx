@@ -1,18 +1,23 @@
 import { useObservable } from "@ngneat/react-rxjs";
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import {
   addTodo,
   deleteTodo,
   todos$,
   updateTodoCompleted,
-} from "../../store/auth.repository";
+} from "../../store/todos.repository";
 import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
 
 const Todos = () => {
   const [todos] = useObservable(todos$);
-  const [animated, setStartAnimation] = useState(false);
+
+  useEffect(() => {
+    addTodo("Welcome");
+    addTodo("To");
+    addTodo("Elf");
+  }, []);
 
   return (
     <Wrapper>
@@ -26,8 +31,6 @@ const Todos = () => {
           {todos.map((todo) => {
             return (
               <TodoItem
-                animated={animated}
-                setStartAnimation={setStartAnimation}
                 todo={todo}
                 key={todo.id}
                 onClick={updateTodoCompleted}
@@ -45,6 +48,7 @@ export default Todos;
 
 const Wrapper = styled.div`
   --background-color: lightblue;
+  --breathing-space: 24px;
 
   display: grid;
   place-content: center;
@@ -60,14 +64,14 @@ const Header = styled.header`
   position: sticky;
   top: 0;
   background-color: var(--background-color);
-  padding: 24px;
+  padding: var(--breathing-space);
 `;
 
 const Card = styled.div`
-  height: 300px;
-  width: 300px;
-  margin-top: -24px;
-  padding: 24px;
+  height: 400px;
+  width: 400px;
+  margin-top: calc(var(--breathing-space) * -1);
+  padding: var(--breathing-space);
   padding-top: 0px;
   background-color: var(--background-color);
   border-radius: 6px;

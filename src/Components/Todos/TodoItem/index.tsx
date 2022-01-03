@@ -6,25 +6,17 @@ interface Props {
   todo: Todo;
   onClick: (id: Todo["id"]) => void;
   onDelete: (id: Todo["id"]) => void;
-  setStartAnimation: React.Dispatch<React.SetStateAction<boolean>>;
-  animated: boolean;
 }
 
 const TodoItem = (props: Props) => {
   const { onClick, onDelete, todo } = props;
 
   const handleOnClick = () => {
-    props.setStartAnimation(true);
     onClick(todo.id);
-    props.setStartAnimation(false);
   };
 
   return (
-    <Wrapper
-      onClick={handleOnClick}
-      animated={props.animated}
-      backgroundColor={props.todo.completed}
-    >
+    <Wrapper onClick={handleOnClick} backgroundColor={props.todo.completed}>
       <InnerWrapper>
         <span>{todo.text}</span>
 
@@ -44,7 +36,7 @@ const fadeIn = keyframes`
       opacity: 1;
   }`;
 
-const Wrapper = styled.div<{ backgroundColor: boolean; animated: boolean }>`
+const Wrapper = styled.div<{ backgroundColor: boolean }>`
   --radius: 12px;
   --padding: 6px;
 
@@ -58,8 +50,7 @@ const Wrapper = styled.div<{ backgroundColor: boolean; animated: boolean }>`
   overflow: hidden;
 
   transition: 300ms background-color;
-
-  animation: ${fadeIn} 1000ms;
+  animation: ${fadeIn} 1500ms;
 `;
 
 const InnerWrapper = styled.div`
