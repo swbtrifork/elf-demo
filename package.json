@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-syntax-flow": "^7.14.5",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@ngneat/effects-hooks": "^1.0.0",
+    "@ngneat/elf": "^1.0.2",
+    "@ngneat/elf-cli-ng": "^1.0.0",
+    "@ngneat/elf-devtools": "^1.2.0",
+    "@ngneat/elf-entities": "^2.0.2",
+    "@ngneat/elf-pagination": "^1.0.0",
+    "@ngneat/elf-persist-state": "^1.0.0",
+    "@ngneat/elf-requests": "^1.1.1",
+    "@ngneat/elf-state-history": "^1.0.1",
+    "@ngneat/react-rxjs": "^1.0.0",
+    "@testing-library/dom": "^8.11.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -10,9 +23,12 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^10.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "rxjs": "^7.5.1",
+    "styled-components": "^5.3.3",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -39,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.19"
   }
 }
