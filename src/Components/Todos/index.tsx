@@ -4,14 +4,15 @@ import styled from "styled-components";
 import {
   addTodo,
   deleteTodo,
-  todos$,
   updateTodoCompleted,
+  visibleTodos$,
 } from "../../store/todos.repository";
 import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
+import TodosFilter from "./TodosFilter";
 
 const Todos = () => {
-  const [todos] = useObservable(todos$);
+  const [todos] = useObservable(visibleTodos$);
 
   useEffect(() => {
     addTodo("Welcome");
@@ -24,6 +25,7 @@ const Todos = () => {
       <Heading>TODOS</Heading>
       <Card>
         <Header>
+          <TodosFilter></TodosFilter>
           <AddTodo onAdd={addTodo}></AddTodo>
         </Header>
 
@@ -65,6 +67,9 @@ const Header = styled.header`
   top: 0;
   background-color: var(--background-color);
   padding: var(--breathing-space);
+  display: flex;
+  flex-direction: column;
+  gap: var(--breathing-space);
 `;
 
 const Card = styled.div`

@@ -48,7 +48,7 @@ export interface TodosProps {
   filter: "ALL" | "ACTIVE" | "COMPLETED";
 }
 
-const filter$ = store.pipe(select(({ filter }) => filter));
+export const filter$ = store.pipe(select(({ filter }) => filter));
 
 export const visibleTodos$ = filter$.pipe(
   switchMap((filter) => {

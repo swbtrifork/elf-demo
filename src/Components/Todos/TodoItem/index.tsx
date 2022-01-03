@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Todo from "../../../interfaces/todos";
 
 interface Props {
@@ -28,14 +28,6 @@ const TodoItem = (props: Props) => {
 
 export default React.memo(TodoItem);
 
-const fadeIn = keyframes`
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-  }`;
-
 const Wrapper = styled.div<{ backgroundColor: boolean }>`
   --radius: 12px;
   --padding: 6px;
@@ -50,7 +42,6 @@ const Wrapper = styled.div<{ backgroundColor: boolean }>`
   overflow: hidden;
 
   transition: 300ms background-color;
-  animation: ${fadeIn} 1500ms;
 `;
 
 const InnerWrapper = styled.div`
