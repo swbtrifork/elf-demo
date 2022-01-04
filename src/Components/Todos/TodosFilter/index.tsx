@@ -1,15 +1,24 @@
 import { useObservable } from "@ngneat/react-rxjs";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import {
-  filter$,
-  TodosProps,
-  updateTodosFilter,
-} from "../../../store/todos.repository";
+import { TodosFilterProps } from "../../../interfaces/todos";
+import { RootState } from "../../../reduxStore/store";
+import { setTodoFilter } from "../../../reduxStore/todofilters";
+import { filter$, updateTodosFilter } from "../../../store/todos.repository";
 
-const TodosFilter = () => {
-  const options: TodosProps["filter"][] = ["ALL", "ACTIVE", "COMPLETED"];
+interface Props {
+  type: "ELF" | "REDUX";
+}
 
+const TodosFilter = (props: Props) => {
+  const { type } = props;
+  const options: TodosFilterProps["filter"][] = ["ALL", "ACTIVE", "COMPLETED"];
+
+  const dispatch = useDispatch();
   const [filter] = useObservable(filter$);
+  const reduxFilter = useSelector(
+    (state: RootState) => state.todoFilter.filter
+  );
 
   return (
     <Wrapper>
@@ -18,9 +27,11 @@ const TodosFilter = () => {
           <Anchor
             key={text}
             onClick={() => {
-              updateTodosFilter(text);
+              type === "ELF"
+                ? updateTodosFilter(text)
+                : dispatch(setTodoFilter({ filter: text }));
             }}
-            chosen={filter === text}
+            chosen={type === "ELF" ? filter === text : reduxFilter === text}
           >
             {text}
             <Revealed>{text}</Revealed>

@@ -9,11 +9,11 @@ import {
   withEntities,
 } from "@ngneat/elf-entities";
 import { switchMap } from "rxjs";
-import Todo, { intialState } from "../interfaces/todos";
+import Todo, { intialState, TodosFilterProps } from "../interfaces/todos";
 
 const { state, config } = createState(
   withEntities<Todo>({ initialValue: intialState }),
-  withProps<TodosProps>({ filter: "ALL" })
+  withProps<TodosFilterProps>({ filter: "ALL" })
 );
 
 const store = new Store({ state, name: "todos", config });
@@ -47,10 +47,6 @@ export const deleteTodo = (id: Todo["id"]) => {
 
 //FILTERS
 
-export interface TodosProps {
-  filter: "ALL" | "ACTIVE" | "COMPLETED";
-}
-
 export const filter$ = store.pipe(select(({ filter }) => filter));
 
 export const visibleTodos$ = filter$.pipe(
@@ -66,6 +62,6 @@ export const visibleTodos$ = filter$.pipe(
   })
 );
 
-export const updateTodosFilter = (filter: TodosProps["filter"]) => {
+export const updateTodosFilter = (filter: TodosFilterProps["filter"]) => {
   store.update((state) => ({ ...state, filter }));
 };

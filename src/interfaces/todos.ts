@@ -9,3 +9,7 @@ export const intialState = [
   { completed: false, id: Math.random() * 100, text: "To" },
   { completed: false, id: Math.random() * 100, text: "Redux" },
 ];
+
+export interface TodosFilterProps {
+  filter: "ALL" | "ACTIVE" | "COMPLETED";
+}

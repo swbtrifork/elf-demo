@@ -30,7 +30,7 @@ const Todos = (props: Props) => {
       <Heading>{type}</Heading>
       <Card>
         <Header>
-          {type === "ELF" && <TodosFilter></TodosFilter>}
+          <TodosFilter type={type}></TodosFilter>
           <AddTodo
             onAdd={(text: Todo["text"]) =>
               type === "ELF" ? addTodo(text) : dispatch(addReduxTodo(text))
