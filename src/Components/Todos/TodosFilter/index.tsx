@@ -14,11 +14,14 @@ const TodosFilter = (props: Props) => {
   const { type } = props;
   const options: TodosFilterProps["filter"][] = ["ALL", "ACTIVE", "COMPLETED"];
 
+  //Redux
   const dispatch = useDispatch();
-  const [filter] = useObservable(filter$);
   const reduxFilter = useSelector(
     (state: RootState) => state.todoFilter.filter
   );
+
+  //ELF
+  const [filter] = useObservable(filter$);
 
   return (
     <Wrapper>
